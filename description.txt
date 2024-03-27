@@ -1,0 +1,3 @@
+Bridge is a HTTPS reverse proxy service designed to securely 
+connect websites to local host services,enabling the utilization 
+of host computer resources via HTTPS
