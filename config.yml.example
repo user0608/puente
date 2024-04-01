@@ -1,1 +1,3 @@
 listen_address: localhost:10265
+data_path: ./data
+db_logs_level: info

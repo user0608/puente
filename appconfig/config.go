@@ -11,13 +11,16 @@ import (
 
 type AppConfig interface {
 	ListenAddress() string
+	DataPath() string
+	DBLogsLevel() string
 }
 type config struct {
 	ListenAddressValue string `mapstructure:"listen_address"`
+	DataPathValue      string `mapstructure:"data_path"`
+	DBLogsLevelValue   string `mapstructure:"db_logs_level"`
 }
 
 func (c *config) validate() error {
-
 	return nil
 }
 
@@ -26,6 +29,19 @@ func (c *config) ListenAddress() string {
 		c.ListenAddressValue = "localhost:10265"
 	}
 	return c.ListenAddressValue
+}
+func (c *config) DataPath() string {
+	if c.DataPathValue == "" {
+		c.DataPathValue = "./data"
+	}
+	return c.DataPathValue
+}
+func (c *config) DBLogsLevel() string {
+	var valids = map[string]bool{"error": true, "warn": true, "info": true}
+	if !valids[c.DBLogsLevelValue] {
+		c.DBLogsLevelValue = "silent"
+	}
+	return c.DBLogsLevelValue
 }
 
 func LoadAppConfig(confPath cmd.ConfigPath) (AppConfig, error) {
